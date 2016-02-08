@@ -100,7 +100,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:paddingTop="5dp"
+            android:id="@+id/RadioGroup1">
 
             <RadioButton
                 android:layout_width="fill_parent"
@@ -127,15 +129,54 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spinnerSelectionText"
+            android:id="@+id/hairTextView"
             android:layout_marginLeft="20dp"
             android:textStyle="bold"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:text="Hair Styles"
+            android:paddingTop="30dp" />
 
         <Spinner
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/componentSelection" />
+            android:id="@+id/hairSpinner"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eye Styles"
+            android:id="@+id/eyeTextView"
+            android:layout_marginLeft="20dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:paddingTop="20dp"/>
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/eyeSpinner"
+            android:paddingLeft="20dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nose Styles"
+            android:id="@+id/noseTextView"
+            android:layout_marginLeft="20dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:paddingTop="20dp"/>
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/noseSpinner"
+            android:paddingLeft="20dp"
+            android:textAlignment="center"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -8,13 +8,66 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
+
+
+    protected Spinner hairStyle;
+    protected Spinner eyes;
+    protected Spinner nose;
+
+    protected TextView red;
+    protected TextView green;
+    protected TextView blue;
+
+    protected SeekBar redSeek;
+    protected SeekBar greenSeek;
+    protected SeekBar blueSeek;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String[] harryStyles = {"Hair Styles","Mohawk", "Bald", "Long Hair"};
+        String[] eyeStyles = {"Eye Styles","Small", "Square", "Round"};
+        String[] noseStyles = {"Nose Styles", "Small", "Tomato", "Voldemort"};
+
+        hairStyle = (Spinner)findViewById(R.id.hairSpinner);
+        ArrayAdapter hair = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, harryStyles);
+        hairStyle.setAdapter(hair);
+        hairStyle.setSelection(0);
+
+        eyes = (Spinner)findViewById(R.id.eyeSpinner);
+        ArrayAdapter eyeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, eyeStyles);
+        eyes.setAdapter(eyeAdapter);
+        eyes.setSelection(0);
+
+        nose = (Spinner)findViewById(R.id.noseSpinner);
+        ArrayAdapter noseAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,noseStyles);
+        nose.setAdapter(noseAdapter);
+        nose.setSelection(0);
+
+        red = (TextView)findViewById(R.id.redTextView);
+        blue = (TextView)findViewById(R.id.blueTextView);
+        green = (TextView)findViewById(R.id.greenTextView);
+
+        redSeek = (SeekBar)findViewById(R.id.redSeekBar);
+        blueSeek = (SeekBar)findViewById(R.id.blueSeekBar);
+        greenSeek = (SeekBar)findViewById(R.id.greenSeekBar);
+
+        myListeners listeners = new myListeners(red, green, blue, redSeek, greenSeek, blueSeek);
+
+
 
     }
 
