@@ -20,11 +20,19 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <SurfaceView
+        <!--
+            External Citation:
+                Date: February 8th, 2016
+                Problem: Surface would not draw
+                Resource: James Schimdt
+                Solution: Replace surface view object with Face object instead.
+        -->
+        <cs301.up.edu.avatarcreator.Face
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/drawingTable"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/pic" />
     </LinearLayout>
 
     <LinearLayout
@@ -177,6 +185,18 @@
             android:id="@+id/noseSpinner"
             android:paddingLeft="20dp"
             android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Randomize"
+            android:id="@+id/randomButton"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 </LinearLayout>

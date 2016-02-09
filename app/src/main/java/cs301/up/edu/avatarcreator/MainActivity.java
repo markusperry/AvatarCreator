@@ -1,24 +1,18 @@
 package cs301.up.edu.avatarcreator;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.SurfaceView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.List;
-
-
 public class MainActivity extends AppCompatActivity {
-
 
     protected Spinner hairStyle;
     protected Spinner eyes;
@@ -32,13 +26,18 @@ public class MainActivity extends AppCompatActivity {
     protected SeekBar greenSeek;
     protected SeekBar blueSeek;
 
+    protected Button randomizer;
+
+    protected RadioGroup buttons;
+
+    protected Face surface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] harryStyles = {"Hair Styles","Mohawk", "Bald", "Long Hair"};
+        String[] harryStyles = {"Hair Styles","Mohawk", "Bald", "Bowl Cut"};
         String[] eyeStyles = {"Eye Styles","Small", "Square", "Round"};
         String[] noseStyles = {"Nose Styles", "Small", "Tomato", "Voldemort"};
 
@@ -65,10 +64,50 @@ public class MainActivity extends AppCompatActivity {
         blueSeek = (SeekBar)findViewById(R.id.blueSeekBar);
         greenSeek = (SeekBar)findViewById(R.id.greenSeekBar);
 
-        myListeners listeners = new myListeners(red, green, blue, redSeek, greenSeek, blueSeek);
+        redSeek.setMax(255);
+        blueSeek.setMax(255);
+        greenSeek.setMax(255);
+
+        randomizer = (Button)findViewById(R.id.randomButton);
+
+        buttons = (RadioGroup)findViewById(R.id.RadioGroup1);
+        /**
+         * EXTERNAL CITATION
+         * DATE: February 8th, 2016
+         * PROBLEM: Select the default button in RadioGroup
+         * RESOURCE: http://stackoverflow.com/questions/9175635/how-to-set-
+         *              radio-button-checked-as-default-in-radiogroup-with-android
+         * SOLUTION: call check on RadioGroup.
+         */
+        buttons.check(R.id.hairRadioButton);
+
+        surface = (Face)findViewById(R.id.drawingTable);
+
+        myListeners listeners = new myListeners(red, green, blue, redSeek, greenSeek, blueSeek, randomizer, hairStyle,
+                eyes, nose, buttons, surface);
+
+        redSeek.setOnSeekBarChangeListener(listeners);
+        blueSeek.setOnSeekBarChangeListener(listeners);
+        greenSeek.setOnSeekBarChangeListener(listeners);
+
+        randomizer.setOnClickListener(listeners);
+
+        buttons.setOnCheckedChangeListener(listeners);
+
+        hairStyle.setOnItemSelectedListener(listeners);
+        eyes.setOnItemSelectedListener(listeners);
+        nose.setOnItemSelectedListener(listeners);
 
 
-
+        /**
+         * EXTERNAL CITATION
+         *
+         * DATE: February 8th, 2016
+         * PROBLEM: Wanted the random to be pressed on app startup
+         * RESOURCE: http://stackoverflow.com/questions/4553374/how-to-simulate-a-button-click-through-code-in-android
+         * SOLUTION: Call performClick on random Button
+         */
+       randomizer.performClick();
     }
 
     @Override
