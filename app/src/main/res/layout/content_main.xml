@@ -32,7 +32,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/drawingTable"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/pic" />
+            android:background="#ffffff" />
     </LinearLayout>
 
     <LinearLayout
@@ -191,12 +191,55 @@
             android:layout_height="20px"
             android:layout_weight="1" />
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Randomize"
-            android:id="@+id/randomButton"
-            android:layout_gravity="center_horizontal" />
+            android:text="long click Randomize for Surpise..."
+            android:id="@+id/longClickView"
+            android:layout_marginLeft="125dp"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:textIsSelectable="false" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Space
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Randomize"
+                android:id="@+id/randomButton"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1" />
+
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="match_parent" />
+
+            <Switch
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/smiley"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:textSize="20dp"
+                android:text="Smile?"
+                android:splitTrack="false"
+                android:layout_marginTop="10dp" />
+
+            <Space
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

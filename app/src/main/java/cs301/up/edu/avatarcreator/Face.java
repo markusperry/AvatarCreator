@@ -1,92 +1,169 @@
 package cs301.up.edu.avatarcreator;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceView;
-
 import java.util.Random;
 
 /**
- * Created by markusperry on 2/8/16.
+ * Face class that extends SurfaceView to draw an Avatar for the user
+ *
+ * @author markusperry
+ * @date Feb 10th, 2016
  */
 public class Face extends SurfaceView {
-
+    //Instance variables
     protected int skinColor;
     protected int eyeColor;
     protected int hairColor;
-
     protected Path[] hairStyles;
     protected int hairStyleIndex;
-
     protected int eyeStyle;
     protected int noseStyle;
+    protected boolean smile=false;
+    protected boolean easter=false;
 
-
+    /**
+     * Constructor Inherited form SurfaceView
+     *
+     * @issue I don't really know what this does.
+     *
+     * @param context Don't really know
+     */
     public Face(Context context) {
         super(context);
         setWillNotDraw(false);
     }
 
+    /**
+     * Constructor inherited from SurfaceView
+     *
+     * @issue I don't know what this does
+     *
+     * @param context unknown
+     * @param attrs unknown
+     */
     public Face(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWillNotDraw(false);
     }
 
+    /**
+     * Constructor inherited from SurfaceView
+     *
+     * @issue I don't know what this does
+     *
+     * @param context unknown
+     * @param attrs unknown
+     * @param defStyleAttr unknown
+     */
     public Face(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setWillNotDraw(false);
     }
 
+    /**
+     * Constructor inherited from SurfaceView
+     *
+     * @issue I don't know what this does
+     *
+     * @param context unknown
+     * @param attrs unknown
+     * @param defStyleRes unknown
+     */
     public Face(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         setWillNotDraw(false);
     }
 
+    /**
+     * draw method to draw the face onto the canvas
+     *
+     * @param g Canvas object where the face will be drawn upon.
+     */
     @Override
     public void onDraw(Canvas g)
     {
+        //draws aspects of the face to the canvas
+        drawFace(g);
         drawHair(g, this.hairStyleIndex);
         drawEyes(g, this.eyeStyle);
-        drawNose(g,noseStyle);
+        drawNose(g, noseStyle);
+        /**
+         * EXTERNAL CITATION
+         * DATE: Feb 9th, 2016
+         * PROBLEM: Wanted to draw drawable resource to the surfaceView
+         * RESOURCE: http://stackoverflow.com/questions/7740687/add-image-to-surface-view-in-android
+         * SOLUTION: Convert to BitMap and draw to canvas
+         */
+
+        //Creates the mouth from a drawable resource and draws it to canvas if
+        //mouth switch is enabled
+        Bitmap mouth = BitmapFactory.decodeResource(getResources(),R.drawable.mouth);
+        Paint mouthColor = new Paint(Color.WHITE);
+        Bitmap resized = Bitmap.createScaledBitmap(mouth,325,250,true);
+        if (smile)
+        {
+            g.drawBitmap(resized,345f,800f,mouthColor);
+        }
+
+        //If the user found the easter egg, draw it to the canvas
+        if (easter)
+        {
+            makeEasterEgg(g);
+            easter=false;
+        }
+
     }
 
+    /**
+     * Method to randomize all instance variables in Face class to genereate
+     * a random looking face.
+     *
+     * Method is called from listener class when random button is pressed.
+     */
     public void randomize()
     {
         Random gen = new Random();
 
+        //Generate random skin, eye, and hair color.
         int r = gen.nextInt(256);
         int g = gen.nextInt(256);
         int b = gen.nextInt(256);
         this.skinColor = Color.rgb(r,g,b);
-
         r=gen.nextInt(256);
         g=gen.nextInt(256);
         b=gen.nextInt(256);
         this.eyeColor = Color.rgb(r,g,b);
-
         r=gen.nextInt(256);
         g=gen.nextInt(256);
         b=gen.nextInt(256);
         this.hairColor = Color.rgb(r,g,b);
 
+        //Pick random hair, eye, and nose style
         hairStyleIndex = gen.nextInt(3)+1;
         eyeStyle = gen.nextInt(3)+1;
         noseStyle = gen.nextInt(3)+1;
     }
 
+    /**
+     * Helper method to draw hair based on a style index provided on a canvas.
+     * @param g Canvas to draw the
+     * @param index the hair style that should be drawn
+     */
     public void drawHair(Canvas g, int index)
     {
+        //Set hair color
         Paint hair = new Paint();
         hair.setColor(this.hairColor);
-
         hairStyles = new Path[4];
-
         /**
          * EXTERNAL CITATION
          * DATE: February 8th, 2016
@@ -94,19 +171,25 @@ public class Face extends SurfaceView {
          * RESOURCE: http://developer.android.com/reference/android/graphics/RectF.html#RectF(float, float, float, float)
          * SOLUTION: Made a RectF and added it to the array with addRoundRect
          */
-        RectF mohawk = new RectF(370f,20f,670,300f);
+
+        //Create mohawk path
+        RectF mohawk = new RectF(363f,20f,663f,300f);
         Path hawk = new Path();
         hawk.addRoundRect(mohawk, 20f, 20f, Path.Direction.CW);
 
+        //Create bald path
         Path bald = new Path();
 
+        //Create bowl cut path
         Path bowlCut = new Path();
-        bowlCut.addArc(100f,20f,910f,800f,180f,180f);
+        bowlCut.addArc(85f,20f,910f,800f,180f,180f);
 
+        //Fill path array with different hair styles
         hairStyles[1] = hawk;
         hairStyles[2] = bald;
         hairStyles[3] = bowlCut;
 
+        //draw desired hair style
         if (index == 1)
         {
             g.drawPath(hairStyles[1], hair);
@@ -120,6 +203,7 @@ public class Face extends SurfaceView {
             g.drawPath(hairStyles[3],hair);
         }
     }
+
 
     public void drawEyes(Canvas g, int index)
     {
@@ -187,19 +271,24 @@ public class Face extends SurfaceView {
 
         Path smallNose = new Path();
         smallNose.moveTo(500f, 670f);
-        smallNose.lineTo(465f,750f);
-        smallNose.lineTo(510f,750f);
+        smallNose.lineTo(465f, 750f);
+        smallNose.lineTo(510f, 750f);
 
         Path tomatoNose = new Path();
-        tomatoNose.moveTo(470f,640f);
-        tomatoNose.lineTo(470f,740f);
-        tomatoNose.moveTo(530f,640f);
-        tomatoNose.lineTo(530f,740f);
-        tomatoNose.addArc(420f,720f,485f,760f,20f,250f);
-        tomatoNose.addArc(515f,720f,580f,760f,267f,250f);
+        tomatoNose.moveTo(470f, 640f);
+        tomatoNose.lineTo(470f, 740f);
+        tomatoNose.moveTo(530f, 640f);
+        tomatoNose.lineTo(530f, 740f);
+        tomatoNose.addArc(420f, 720f, 485f, 760f, 20f, 250f);
+        tomatoNose.addArc(515f, 720f, 580f, 760f, 267f, 250f);
+
+        Path vold = new Path();
+        vold.addOval(475, 650f, 485f, 730f, Path.Direction.CW);
+        vold.addOval(515f, 650f, 525f, 730f, Path.Direction.CW);
 
         snouzer[1]=smallNose;
         snouzer[2]=tomatoNose;
+        snouzer[3]=vold;
 
         if (index==1)
         {
@@ -213,7 +302,32 @@ public class Face extends SurfaceView {
             noser.setStrokeWidth(10f);
             g.drawPath(snouzer[2],noser);
         }
+        else
+        {
+            noser.setStyle(Paint.Style.FILL);
+            g.drawPath(snouzer[3], noser);
+        }
 
+    }
+
+    public void drawFace(Canvas g)
+    {
+        Path facial = new Path();
+        facial.addOval(90f, 100f, 900f, 1250f, Path.Direction.CW);
+
+        Paint facePaint = new Paint();
+        facePaint.setColor(skinColor);
+        facePaint.setStyle(Paint.Style.FILL);
+        g.drawPath(facial,facePaint);
+    }
+
+    public void makeEasterEgg(Canvas g)
+    {
+        Paint myPaint = new Paint(Color.WHITE);
+        Bitmap face = BitmapFactory.decodeResource(getResources(),R.drawable.nux3);
+        Bitmap resized = Bitmap.createScaledBitmap(face,g.getWidth(),g.getHeight(),true);
+
+        g.drawBitmap(resized,0f,0f,myPaint);
     }
 
 }
