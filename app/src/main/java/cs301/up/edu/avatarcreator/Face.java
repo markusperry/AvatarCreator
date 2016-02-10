@@ -204,7 +204,13 @@ public class Face extends SurfaceView {
         }
     }
 
-
+    /**
+     * Helper method to draw the eyes of the face on the given canvas
+     * with a specific style index
+     *
+     * @param g canvs to draw the eyes on
+     * @param index index that says which eyes to draw
+     */
     public void drawEyes(Canvas g, int index)
     {
         Paint black = new Paint(Color.BLACK);
