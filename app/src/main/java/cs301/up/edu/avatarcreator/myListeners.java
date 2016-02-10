@@ -22,8 +22,8 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
                                     RadioGroup.OnCheckedChangeListener,
                                     Spinner.OnItemSelectedListener,
                                     Switch.OnCheckedChangeListener,
-                                    View.OnLongClickListener{
-
+                                    View.OnLongClickListener
+{
     //Instance Variables
     protected TextView redView;
     protected TextView greenView;
@@ -133,7 +133,7 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
 
         //re-draw Face
         drawingFace.invalidate();
-    }
+    }//onProgressChanged()
 
     /**
      * ========UNUSED===========
@@ -142,7 +142,8 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
 
-    }
+    }//onStartTrackingTouch()
+
     /**
      * ========UNUSED===========
      * @param seekBar
@@ -150,7 +151,7 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
-    }
+    }//onStopTrackingTouch
 
     /**
      * OnClick listener that is called when Buttons are pressed on the screen.
@@ -188,7 +189,7 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
             //Re-draw if necessary
             drawingFace.invalidate();
         }
-    }
+    }//onClick
 
     /**
      * Called when the user changes the selection in the radio group
@@ -217,7 +218,7 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
 
         //re-draw face if necessary
         drawingFace.invalidate();
-    }
+    }//onCheckedChange()
 
     /**
      * Method to set RGB sliders to a given color
@@ -233,7 +234,7 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
         r.setProgress(Color.red(color));
         g.setProgress(Color.green(color));
         b.setProgress(Color.blue(color));
-    }
+    }//setSliders
 
     /**
      * Spinner change listener called when user changes selection in any Spinner
@@ -297,7 +298,7 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
 
         //Re-draw face with changes
         drawingFace.invalidate();
-    }
+    }//OnItemSelected()
 
     /**
      * ==============UNUSED================
@@ -307,7 +308,7 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
+    }//onNothingSelected()
 
     /**
      * Change listener for Toggle Switches
@@ -333,7 +334,7 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
 
         //Re-draw face
         drawingFace.invalidate();
-    }
+    }//onCheckChange()
 
     /**
      * Long-click listener called when a button is long-clicked
@@ -347,5 +348,5 @@ public class myListeners implements SeekBar.OnSeekBarChangeListener,
         drawingFace.easter = true;
         drawingFace.invalidate();
         return true;
-    }
-}
+    }//onLongClick()
+}//myListeners

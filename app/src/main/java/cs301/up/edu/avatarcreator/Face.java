@@ -40,7 +40,7 @@ public class Face extends SurfaceView {
     public Face(Context context) {
         super(context);
         setWillNotDraw(false);
-    }
+    }//ctor
 
     /**
      * Constructor inherited from SurfaceView
@@ -53,7 +53,7 @@ public class Face extends SurfaceView {
     public Face(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWillNotDraw(false);
-    }
+    }//ctor
 
     /**
      * Constructor inherited from SurfaceView
@@ -67,7 +67,7 @@ public class Face extends SurfaceView {
     public Face(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setWillNotDraw(false);
-    }
+    }//ctor
 
     /**
      * Constructor inherited from SurfaceView
@@ -81,7 +81,7 @@ public class Face extends SurfaceView {
     public Face(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         setWillNotDraw(false);
-    }
+    }//ctor
 
     /**
      * draw method to draw the face onto the canvas
@@ -121,7 +121,7 @@ public class Face extends SurfaceView {
             easter=false;
         }
 
-    }
+    }//onDraw
 
     /**
      * Method to randomize all instance variables in Face class to genereate
@@ -151,7 +151,7 @@ public class Face extends SurfaceView {
         hairStyleIndex = gen.nextInt(3)+1;
         eyeStyle = gen.nextInt(3)+1;
         noseStyle = gen.nextInt(3)+1;
-    }
+    }//randomize()
 
     /**
      * Helper method to draw hair based on a style index provided on a canvas.
@@ -202,7 +202,7 @@ public class Face extends SurfaceView {
         {
             g.drawPath(hairStyles[3],hair);
         }
-    }
+    }//drawHair()
 
     /**
      * Helper method to draw the eyes of the face on the given canvas
@@ -213,38 +213,50 @@ public class Face extends SurfaceView {
      */
     public void drawEyes(Canvas g, int index)
     {
+        //Define a black paint
         Paint black = new Paint(Color.BLACK);
 
+        //Set eye color given by the current instance variable
         Paint eyes = new Paint();
         eyes.setColor(eyeColor);
+
+        //Eye array to hold different eye styles
         Path[] eyeBall = new Path[4];
 
+        //Create small eyes
         Path smallEyes = new Path();
         smallEyes.addOval(300f,500f,375f,530f,Path.Direction.CW);
         smallEyes.addOval(630f,500f,705,530f,Path.Direction.CW);
 
+        //Create outside of square eyes
         Path squareOutside = new Path();
         RectF outsideEyeLeft = new RectF(275f,500f,400f,600f);
         RectF outsideEyeRight = new RectF(600f, 500f,725f, 600f);
         squareOutside.addRoundRect(outsideEyeLeft, 15f, 15f, Path.Direction.CW);
         squareOutside.addRoundRect(outsideEyeRight, 15f, 15f, Path.Direction.CW);
 
+        //create square inside
         Path squareInside = new Path();
         squareInside.addCircle(338f, 545f, 30f, Path.Direction.CW);
         squareInside.addCircle(660f, 545f, 30f, Path.Direction.CW);
 
+        //create round eyes
         Path roundEyes = new Path();
         roundEyes.addCircle(350f,575f,60f, Path.Direction.CW);
         roundEyes.addCircle(655f, 575f, 60f, Path.Direction.CW);
 
+        //fill array
         eyeBall[1]=smallEyes;
         eyeBall[2]=squareInside;
         eyeBall[3]=roundEyes;
 
+        //draw small eyes
         if (index==1)
         {
             g.drawPath(eyeBall[1],eyes);
         }
+
+        //draw sqaure eyes
         else if (index==2)
         {
             black.setStyle(Paint.Style.STROKE);
@@ -261,25 +273,37 @@ public class Face extends SurfaceView {
             g.drawPath(eyeBall[2],eyes);
 
         }
+
+        //draw round eyes
         else
         {
             g.drawPath(eyeBall[3],eyes);
             g.drawCircle(350f,575f,20f, black);
             g.drawCircle(655f, 575f, 20f, black);
         }
-    }
+    }//drawEyes()
 
+    /**
+     * Helper method to draw a nose.
+     *
+     * @param g the canvas to draw on
+     * @param index the eye Nose style to draw
+     */
     public void drawNose(Canvas g, int index)
     {
+        //implement path array
         Path[] snouzer = new Path[4];
 
+        //Black color
         Paint noser = new Paint(Color.BLACK);
 
+        //Create small nose
         Path smallNose = new Path();
         smallNose.moveTo(500f, 670f);
         smallNose.lineTo(465f, 750f);
         smallNose.lineTo(510f, 750f);
 
+        //create tomato nose
         Path tomatoNose = new Path();
         tomatoNose.moveTo(470f, 640f);
         tomatoNose.lineTo(470f, 740f);
@@ -288,36 +312,48 @@ public class Face extends SurfaceView {
         tomatoNose.addArc(420f, 720f, 485f, 760f, 20f, 250f);
         tomatoNose.addArc(515f, 720f, 580f, 760f, 267f, 250f);
 
+        //create voldemort nose
         Path vold = new Path();
         vold.addOval(475, 650f, 485f, 730f, Path.Direction.CW);
         vold.addOval(515f, 650f, 525f, 730f, Path.Direction.CW);
 
+        //fill array
         snouzer[1]=smallNose;
         snouzer[2]=tomatoNose;
         snouzer[3]=vold;
 
+        //draw small nose
         if (index==1)
         {
             noser.setStyle(Paint.Style.STROKE);
             noser.setStrokeWidth(10f);
             g.drawPath(snouzer[1],noser);
         }
+
+        //draw tomato nose
         else if (index==2)
         {
             noser.setStyle(Paint.Style.STROKE);
             noser.setStrokeWidth(10f);
             g.drawPath(snouzer[2],noser);
         }
+
+        //draw voldemort nose
         else
         {
             noser.setStyle(Paint.Style.FILL);
             g.drawPath(snouzer[3], noser);
         }
+    }//drawNose()
 
-    }
-
+    /**
+     * Helper method to draw the Face
+     *
+     * @param g canvas to draw Face on
+     */
     public void drawFace(Canvas g)
     {
+        //Add an oval face with desired skin color
         Path facial = new Path();
         facial.addOval(90f, 100f, 900f, 1250f, Path.Direction.CW);
 
@@ -325,15 +361,20 @@ public class Face extends SurfaceView {
         facePaint.setColor(skinColor);
         facePaint.setStyle(Paint.Style.FILL);
         g.drawPath(facial,facePaint);
-    }
+    }//drawFace()
 
+    /**
+     * Create an easter egg for the user.
+     *
+     * @param g canvas to draw on
+     */
     public void makeEasterEgg(Canvas g)
     {
+        //you have to find out
         Paint myPaint = new Paint(Color.WHITE);
         Bitmap face = BitmapFactory.decodeResource(getResources(),R.drawable.nux3);
         Bitmap resized = Bitmap.createScaledBitmap(face,g.getWidth(),g.getHeight(),true);
 
         g.drawBitmap(resized,0f,0f,myPaint);
-    }
-
-}
+    }//makeEasterEgg()
+}//Face
